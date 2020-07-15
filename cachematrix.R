@@ -9,15 +9,15 @@
 ## inverse matrix. 
 
 makeCacheMatrix <- function(x = matrix()) {
-	invmat <- NULL
-	set <- function(y) {
-		x <<- y
-		invmat <<- NULL
+	invmat <- NULL			## stores inverse matrix                                                                   
+	set <- function(y) {		## function to set the matrix
+		x <<- y			## stores matrix in "x" in parent environment
+		invmat <<- NULL		## stores NULL in "invmat" in parent environment
 	}
-	get <- function() x
-	setinverse <- function(inverse) invmat <<- inverse
-	getinverse <- function() invmat
-	list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
+	get <- function() x		## function to get the matrix
+	setinverse <- function(inverse) invmat <<- inverse		## function to set inverse matrix
+	getinverse <- function() invmat					## function to get inverse matrix
+	list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)	## cached matrix
 }
 
 
@@ -29,13 +29,13 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-	invmat <- x$getinverse()
-	if(!is.null(invmat)){
-		message("getting cached data")
-		return(invmat)
+	invmat <- x$getinverse()		## function to get inverse matrix in "invmat"
+	if(!is.null(invmat)){			## condition to check "invmat" is NULL or not 
+		message("getting cached data")	## if "invmat" is not NULL then return "invmat" ...
+		return(invmat)			## with message
 	}
-	data <- x$get()
-	invmat <- solve(data, ...)
-	x$setinverse(invmat)
-	invmat
+	data <- x$get()				## function to get matrix in "data"
+	invmat <- solve(data, ...)		## calculate inverse matrix of the "data"
+	x$setinverse(invmat)			## function to set inverse matrix invmat
+	invmat					## return inverse matrix
 }
